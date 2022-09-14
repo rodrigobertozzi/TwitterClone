@@ -8,9 +8,12 @@
 
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Validators\" />
     <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Twitter.Core\Twitter.Core.csproj" />
   </ItemGroup>
 
 </Project>
