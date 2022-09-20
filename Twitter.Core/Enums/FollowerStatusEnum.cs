@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Twitter.Core.Repositories
+namespace Twitter.Core.Enums
 {
-    public interface ITweetRepository
+    public enum FollowerStatusEnum
     {
-        
+        NotFollower = 0,
+        Follower = 1,
     }
 }

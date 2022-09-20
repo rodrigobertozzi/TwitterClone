@@ -9,6 +9,11 @@ namespace Twitter.Application.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<int>
     {
+        public CreateUserCommand(int id)
+        {
+            Id = id;
+        }
 
+        public int Id { get; set; }
     }
 }

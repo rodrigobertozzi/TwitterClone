@@ -8,14 +8,23 @@ namespace Twitter.Core.Entities
 {
     public class UserTweet : BaseEntity
     {
-        public UserTweet(int idUser, int idTweet)
+        public UserTweet()
         {
-            IdUser = idUser;
-            IdTweet = idTweet;
-        }
 
-        public int IdUser { get; private set; }
+        }
+        public UserTweet(string content, int idTweet, int idUser, User username)
+        {
+            Content = content;
+            IdTweet = idTweet;
+            IdUser = idUser;
+            Username = username;
+
+            CreatedAt = DateTime.Now;
+        }
+        public string? Content { get; private set; }
         public int IdTweet { get; private set; }
-        public Tweet Tweet { get; private set; }
+        public int IdUser { get; private set; }
+        public User? Username { get; private set; }
+        public DateTime? CreatedAt { get; private set; }
     }
 }

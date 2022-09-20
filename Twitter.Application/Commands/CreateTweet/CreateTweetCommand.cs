@@ -9,6 +9,12 @@ namespace Twitter.Application.Commands.CreateTweet
 {
     public class CreateTweetCommand : IRequest<int>
     {
+        public CreateTweetCommand(string content)
+        {
+            Content = content;
+        }
 
+        public int IdTweet { get; private set; }
+        public string Content { get; private set; }
     }
 }

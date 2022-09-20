@@ -10,6 +10,11 @@ namespace Twitter.Application.Queries.GetAllTweets
 {
     public class GetAllTweetsQuery : IRequest<TweetViewModel>
     {
+        public string Username { get; set; }
 
+        public GetAllTweetsQuery(string username)
+        {
+            Username = username;
+        }
     }
 }

@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using Twitter.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("TwitterCs");
+builder.Services.AddDbContext<TwitterDbContext>(option => option.UseSqlServer(connectionString));
 
 // Add services to the container.
 
