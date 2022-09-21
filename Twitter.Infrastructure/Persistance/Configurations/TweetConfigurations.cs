@@ -9,9 +9,9 @@ using Twitter.Core.Entities;
 
 namespace Twitter.Infrastructure.Persistance.Configurations
 {
-    public class UserTweetConfigurations : IEntityTypeConfiguration<UserTweet>
+    public class TweetConfigurations : IEntityTypeConfiguration<Tweet>
     {
-        public void Configure(EntityTypeBuilder<UserTweet> builder)
+        public void Configure(EntityTypeBuilder<Tweet> builder)
         {
             builder
                 .HasKey(x => x.Id);

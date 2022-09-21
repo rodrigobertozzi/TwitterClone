@@ -10,11 +10,10 @@ namespace Twitter.Application.Queries.GetUser
 {
     public class GetUserQuery : IRequest<UserViewModel>
     {
-        public string Username { get; private set; }
-
-        public GetUserQuery(string username)
+        public GetUserQuery(int id)
         {
-            Username = username;
+            Id = id;
         }
+        public int Id { get; private set; }
     }
 }

@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Twitter.Core.Repositories;
 using Twitter.Infrastructure;
+using Twitter.Infrastructure.Persistance.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("TwitterCs");
 builder.Services.AddDbContext<TwitterDbContext>(option => option.UseSqlServer(connectionString));
 
+builder.Services.AddScoped<ITweetRepository, TweetRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers();

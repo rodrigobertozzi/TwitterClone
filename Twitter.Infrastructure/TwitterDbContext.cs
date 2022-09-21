@@ -11,10 +11,12 @@ namespace Twitter.Infrastructure
             
         }
 
-        public DbSet<User>? Users { get; set; }
-        public DbSet<UserFollower>? UserFollowers { get; set; }
-        public DbSet<UserFollowing>? UserFollowings { get; set; }
-        public DbSet<UserTweet>? UserTweets { get; set; }
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Follower> Followers => Set<Follower>();
+        public DbSet<Following> Followings => Set<Following>();
+        public DbSet<UserFollower> UserFollowers => Set<UserFollower>();
+        public DbSet<UserFollowing> UserFollowings => Set<UserFollowing>();
+        public DbSet<Tweet> Tweets => Set<Tweet>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

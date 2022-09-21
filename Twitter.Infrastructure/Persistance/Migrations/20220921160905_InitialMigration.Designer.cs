@@ -12,7 +12,7 @@ using Twitter.Infrastructure;
 namespace Twitter.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(TwitterDbContext))]
-    [Migration("20220920181230_InitialMigration")]
+    [Migration("20220921160905_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,14 +35,14 @@ namespace Twitter.Infrastructure.Persistance.Migrations
                     b.Property<int>("IdFollower")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsernameId")
+                    b.Property<int>("UsernameId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UsernameId");
 
-                    b.ToTable("Follower");
+                    b.ToTable("Followers");
                 });
 
             modelBuilder.Entity("Twitter.Core.Entities.Following", b =>
@@ -56,14 +56,42 @@ namespace Twitter.Infrastructure.Persistance.Migrations
                     b.Property<int>("IdFollowing")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsernameId")
+                    b.Property<int>("UsernameId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UsernameId");
 
-                    b.ToTable("Following");
+                    b.ToTable("Followings");
+                });
+
+            modelBuilder.Entity("Twitter.Core.Entities.Tweet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdTweet")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUser")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
+
+                    b.ToTable("Tweets");
                 });
 
             modelBuilder.Entity("Twitter.Core.Entities.User", b =>
@@ -78,30 +106,37 @@ namespace Twitter.Infrastructure.Persistance.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Bio")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("BirthDate")
+                    b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -117,7 +152,7 @@ namespace Twitter.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("FollowerId")
+                    b.Property<int>("FollowerId")
                         .HasColumnType("int");
 
                     b.Property<int>("IdFollower")
@@ -143,7 +178,7 @@ namespace Twitter.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("FollowingId")
+                    b.Property<int>("FollowingId")
                         .HasColumnType("int");
 
                     b.Property<int>("IdFollowing")
@@ -161,43 +196,13 @@ namespace Twitter.Infrastructure.Persistance.Migrations
                     b.ToTable("UserFollowings");
                 });
 
-            modelBuilder.Entity("Twitter.Core.Entities.UserTweet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdTweet")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdUser")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UsernameId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdTweet");
-
-                    b.HasIndex("UsernameId");
-
-                    b.ToTable("UserTweets");
-                });
-
             modelBuilder.Entity("Twitter.Core.Entities.Follower", b =>
                 {
                     b.HasOne("Twitter.Core.Entities.User", "Username")
                         .WithMany()
-                        .HasForeignKey("UsernameId");
+                        .HasForeignKey("UsernameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Username");
                 });
@@ -206,21 +211,34 @@ namespace Twitter.Infrastructure.Persistance.Migrations
                 {
                     b.HasOne("Twitter.Core.Entities.User", "Username")
                         .WithMany()
-                        .HasForeignKey("UsernameId");
+                        .HasForeignKey("UsernameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Username");
+                });
+
+            modelBuilder.Entity("Twitter.Core.Entities.Tweet", b =>
+                {
+                    b.HasOne("Twitter.Core.Entities.User", null)
+                        .WithMany("Tweets")
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Twitter.Core.Entities.UserFollower", b =>
                 {
                     b.HasOne("Twitter.Core.Entities.Follower", "Follower")
                         .WithMany()
-                        .HasForeignKey("FollowerId");
+                        .HasForeignKey("FollowerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Twitter.Core.Entities.User", null)
                         .WithMany("Followers")
                         .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Follower");
@@ -230,30 +248,17 @@ namespace Twitter.Infrastructure.Persistance.Migrations
                 {
                     b.HasOne("Twitter.Core.Entities.Following", "Following")
                         .WithMany()
-                        .HasForeignKey("FollowingId");
+                        .HasForeignKey("FollowingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Twitter.Core.Entities.User", null)
                         .WithMany("Following")
                         .HasForeignKey("IdUser")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Following");
-                });
-
-            modelBuilder.Entity("Twitter.Core.Entities.UserTweet", b =>
-                {
-                    b.HasOne("Twitter.Core.Entities.User", null)
-                        .WithMany("Tweets")
-                        .HasForeignKey("IdTweet")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Twitter.Core.Entities.User", "Username")
-                        .WithMany()
-                        .HasForeignKey("UsernameId");
-
-                    b.Navigation("Username");
                 });
 
             modelBuilder.Entity("Twitter.Core.Entities.User", b =>

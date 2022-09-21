@@ -10,11 +10,10 @@ namespace Twitter.Application.Queries.GetAllFollowing
 {
     public class GetAllFollowingQuery : IRequest<List<FollowingDTO>>
     {
-        public string Username { get; set; }
-
-        public GetAllFollowingQuery(string username)
+        public GetAllFollowingQuery(int id)
         {
-            Username = username;
+            Id = id;
         }
+        public int Id { get; private set; }
     }
 }

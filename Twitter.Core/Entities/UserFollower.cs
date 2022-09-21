@@ -22,7 +22,7 @@ namespace Twitter.Core.Entities
 
         public int IdUser { get; private set; }
         public int IdFollower { get; private set; }
-        public Follower? Follower { get; private set; }
+        public Follower Follower { get; private set; } = new Follower();
 
 
     }

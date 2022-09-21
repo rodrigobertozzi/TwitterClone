@@ -19,20 +19,20 @@ namespace Twitter.Infrastructure.Persistance.Configurations
             builder
                 .HasMany(u => u.Tweets)
                 .WithOne()
-                .HasForeignKey(u => u.IdTweet)
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasForeignKey(u => u.IdUser)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(u => u.Followers)
                 .WithOne()
                 .HasForeignKey(u => u.IdUser)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(u => u.Following)
                 .WithOne()
                 .HasForeignKey(u => u.IdUser)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

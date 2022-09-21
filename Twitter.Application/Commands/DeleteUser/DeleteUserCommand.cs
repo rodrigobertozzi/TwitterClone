@@ -9,11 +9,10 @@ namespace Twitter.Application.Commands.DeleteUser
 {
     public class DeleteUserCommand : IRequest<Unit>
     {
-        public string Username { get; set; }
-
-        public DeleteUserCommand(string username)
+        public DeleteUserCommand(int id)
         {
-            Username = username;
+            Id = id;
         }
+        public int Id { get; set; }
     }
 }

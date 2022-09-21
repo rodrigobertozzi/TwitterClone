@@ -10,11 +10,11 @@ namespace Twitter.Application.Queries.GetAllFollowers
 {
     public class GetAllFollowersQuery : IRequest<List<FollowerDTO>>
     {
-        public string Username { get; set; }
-
-        public GetAllFollowersQuery(string username)
+        public GetAllFollowersQuery(int id)
         {
-            Username = username;
+            Id = id;
         }
+
+        public int Id { get; private set; }
     }
 }

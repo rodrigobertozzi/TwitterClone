@@ -19,26 +19,26 @@ namespace Twitter.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{username}")]
-        public async Task<IActionResult> GetByUsername(string username)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByUsername(int id)
         {
-            var query = new GetUserQuery(username);
+            var query = new GetUserQuery(id);
             var user = await _mediator.Send(query);
             return Ok(user);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllFollowers(string username)
+        public async Task<IActionResult> GetAllFollowers(int id)
         {
-            var query = new GetAllFollowersQuery(username);
+            var query = new GetAllFollowersQuery(id);
             var followers = await _mediator.Send(query);
             return Ok(followers);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllFollowings(string username)
+        public async Task<IActionResult> GetAllFollowings(int id)
         {
-            var query = new GetAllFollowingQuery(username);
+            var query = new GetAllFollowingQuery(id);
             var followings = await _mediator.Send(query);
             return Ok(followings);
         }
@@ -62,10 +62,10 @@ namespace Twitter.API.Controllers
             return Ok(loginUserViewModel);
         }
 
-        [HttpDelete("{username}")]
-        public async Task<IActionResult> Delete(string username)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var command = new DeleteUserCommand(username);
+            var command = new DeleteUserCommand(id);
             await _mediator.Send(command);
             return NoContent();
         }

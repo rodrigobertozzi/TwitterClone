@@ -6,25 +6,23 @@ using System.Threading.Tasks;
 
 namespace Twitter.Core.Entities
 {
-    public class UserTweet : BaseEntity
+    public class Tweet : BaseEntity
     {
-        public UserTweet()
+        public Tweet()
         {
 
         }
-        public UserTweet(string content, int idTweet, int idUser, User username)
+        public Tweet(string content, int idTweet, int idUser)
         {
             Content = content;
             IdTweet = idTweet;
             IdUser = idUser;
-            Username = username;
 
             CreatedAt = DateTime.Now;
         }
-        public string? Content { get; private set; }
+        public string Content { get; private set; } = string.Empty;
         public int IdTweet { get; private set; }
         public int IdUser { get; private set; }
-        public User? Username { get; private set; }
-        public DateTime? CreatedAt { get; private set; }
+        public DateTime CreatedAt { get; private set; }
     }
 }

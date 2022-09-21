@@ -16,7 +16,7 @@ namespace Twitter.Application.ViewModels
             CreatedAt = createdAt;
             Bio = bio;
             Location = location;
-            Tweets = new List<UserTweet>();
+            Tweets = new List<Tweet>();
             Followers = new List<UserFollower>();
             Following = new List<UserFollowing>();
         }
@@ -26,7 +26,7 @@ namespace Twitter.Application.ViewModels
         public DateTime CreatedAt { get; private set; }
         public string Bio { get; private set; }
         public string Location { get; private set; }
-        public List<UserTweet> Tweets { get; private set; }
+        public List<Tweet> Tweets { get; private set; }
         public List<UserFollower> Followers { get; private set; }
         public List<UserFollowing> Following { get; private set; }
     }

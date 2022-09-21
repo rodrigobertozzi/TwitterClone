@@ -20,6 +20,6 @@ namespace Twitter.Core.Entities
         }
 
         public int IdFollower { get; private set; }
-        public User? Username { get; private set; }
+        public User Username { get; private set; } = new User();
     }
 }

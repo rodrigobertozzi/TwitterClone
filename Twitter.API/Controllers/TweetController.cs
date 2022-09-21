@@ -16,9 +16,9 @@ namespace Twitter.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get(string username)
+        public async Task<IActionResult> Get(int id)
         {
-            var query = new GetAllTweetsQuery(username);
+            var query = new GetAllTweetsQuery(id);
             var allTweetsByUser = await _mediator.Send(query);
             return Ok(allTweetsByUser);
         }
