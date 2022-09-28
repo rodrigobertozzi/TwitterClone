@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.Repositories;
+using Twitter.Domain.Repositories;
 
 namespace Twitter.Infrastructure.Persistance
 {
@@ -11,6 +11,7 @@ namespace Twitter.Infrastructure.Persistance
     {
         ITweetRepository Tweets { get; }
         IUserRepository Users { get; }
+        IFollowRepository Follows { get; }
         Task<int> CompleteAsync();
         Task BeginTransactionAsync();
         Task CommitAsync();

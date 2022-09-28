@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Twitter.Application.Commands.CreateTweet;
-using Twitter.Application.Commands.DeleteTweet;
-using Twitter.Application.Queries.GetAllTweets;
+using Twitter.Application.Tweets.Commands.CreateTweet;
+using Twitter.Application.Tweets.Commands.DeleteTweet;
+using Twitter.Application.Tweets.Queries.GetAllTweets;
 
 namespace Twitter.API.Controllers
 {

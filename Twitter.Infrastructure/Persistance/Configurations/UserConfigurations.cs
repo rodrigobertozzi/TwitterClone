@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.Entities;
+using Twitter.Domain.Entities;
 
 namespace Twitter.Infrastructure.Persistance.Configurations
 {
@@ -17,22 +17,20 @@ namespace Twitter.Infrastructure.Persistance.Configurations
                 .HasKey(u => u.Id);
 
             builder
-                .HasMany(u => u.Tweets)
-                .WithOne()
-                .HasForeignKey(u => u.IdUser)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .Property(u => u.FullName)
+                .HasMaxLength(60);
+            
             builder
-                .HasMany(u => u.Followers)
-                .WithOne()
-                .HasForeignKey(u => u.IdUser)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .Property(u => u.Username)
+                .HasMaxLength(20);
+            
             builder
-                .HasMany(u => u.Following)
-                .WithOne()
-                .HasForeignKey(u => u.IdUser)
-                .OnDelete(DeleteBehavior.Restrict);
+                .Property(u => u.Location)
+                .HasMaxLength(30);
+            
+            builder
+                .HasIndex(u => u.Username)
+                .IsUnique();
         }
     }
 }

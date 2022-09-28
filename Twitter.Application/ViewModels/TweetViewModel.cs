@@ -8,15 +8,11 @@ namespace Twitter.Application.ViewModels
 {
     public class TweetViewModel
     {
-        public TweetViewModel(int idTweet, string content, DateTime createdAt)
+        public TweetViewModel(string content)
         {
-            IdTweet = idTweet;
             Content = content;
-            CreatedAt = createdAt;
         }
-
-        public int IdTweet { get; private set; }
+        public int Id { get; private set; }
         public string Content { get; private set; }
-        public DateTime CreatedAt { get; private set; }
     }
 }

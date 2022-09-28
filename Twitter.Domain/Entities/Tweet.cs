@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Twitter.Domain.Shared;
+
+namespace Twitter.Domain.Entities
+{
+    public class Tweet : BaseEntity
+    {
+        public Tweet()
+        {
+
+        }
+
+        public Tweet(string content)
+        {
+            Content = content;
+        }
+
+        public string Content { get; private set; } = string.Empty;
+        public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
+    }
+}

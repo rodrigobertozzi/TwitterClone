@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.Entities;
+using Twitter.Domain.Entities;
 
 namespace Twitter.Application.ViewModels
 {
@@ -17,8 +17,6 @@ namespace Twitter.Application.ViewModels
             Bio = bio;
             Location = location;
             Tweets = new List<Tweet>();
-            Followers = new List<UserFollower>();
-            Following = new List<UserFollowing>();
         }
 
         public string Name { get; private set; }
@@ -27,7 +25,5 @@ namespace Twitter.Application.ViewModels
         public string Bio { get; private set; }
         public string Location { get; private set; }
         public List<Tweet> Tweets { get; private set; }
-        public List<UserFollower> Followers { get; private set; }
-        public List<UserFollowing> Following { get; private set; }
     }
 }

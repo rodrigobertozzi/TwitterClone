@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.Entities;
+using Twitter.Domain.Entities;
 
 namespace Twitter.Infrastructure.Persistance.Configurations
 {
@@ -15,6 +15,9 @@ namespace Twitter.Infrastructure.Persistance.Configurations
         {
             builder
                 .HasKey(x => x.Id);
+
+            builder
+                .Ignore(f => f.DomainEvents);
         }
     }
 }

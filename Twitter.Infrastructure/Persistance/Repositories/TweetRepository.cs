@@ -2,13 +2,15 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Twitter.Core.Entities;
-using Twitter.Core.Repositories;
+using Twitter.Domain.Entities;
+using Twitter.Domain.Models;
+using Twitter.Domain.Repositories;
 
 namespace Twitter.Infrastructure.Persistance.Repositories
 {
     public class TweetRepository : ITweetRepository
     {
+        private const int PAGE_SIZE = 2;
         private readonly TwitterDbContext _dbContext;
         private readonly string _connectionString;
         public TweetRepository(TwitterDbContext dbContext, IConfiguration configuration)
@@ -23,6 +25,17 @@ namespace Twitter.Infrastructure.Persistance.Repositories
                 .Tweets
                 .AsNoTracking()
                 .SingleOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<PaginationResult<Tweet>> GetAllAsync(string query, int page)
+        {
+            IQueryable<Tweet> tweets = _dbContext.Tweets;
+            if(!string.IsNullOrEmpty(query))
+            {
+                tweets = tweets
+                    .Where(t => t.Content.Contains(query));
+            }
+            return await tweets.GetPaged<Tweet>(page, PAGE_SIZE);
         }
 
         public async Task AddAsync(Tweet tweet)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.Entities;
+using Twitter.Domain.Entities;
 
 namespace Twitter.Application.ViewModels
 {

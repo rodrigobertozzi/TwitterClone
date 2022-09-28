@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.Repositories;
+using Twitter.Domain.Repositories;
 
 namespace Twitter.Infrastructure.Persistance
 {
@@ -12,15 +12,16 @@ namespace Twitter.Infrastructure.Persistance
     {
         private IDbContextTransaction _transaction;
         private readonly TwitterDbContext _context;
-        public UnitOfWork(TwitterDbContext context, ITweetRepository tweets, IUserRepository users)
+        public UnitOfWork(TwitterDbContext context, ITweetRepository tweets, IUserRepository users, IFollowRepository follows)
         {
             _context = context;
             Tweets = tweets;
             Users = users;
+            Follows = follows;
         }
         public ITweetRepository Tweets { get; }
-
         public IUserRepository Users { get; }
+        public IFollowRepository Follows { get; }
 
         public async Task BeginTransactionAsync()
         {

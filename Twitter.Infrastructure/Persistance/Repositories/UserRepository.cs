@@ -7,9 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Core.DTOs;
-using Twitter.Core.Entities;
-using Twitter.Core.Repositories;
+using Twitter.Domain.Entities;
+using Twitter.Domain.Repositories;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Twitter.Infrastructure.Persistance.Repositories
@@ -41,6 +40,12 @@ namespace Twitter.Infrastructure.Persistance.Repositories
             await sqlConnection.OpenAsync();
             var script = "DELETE FROM Users WHERE Id = @id";
             await sqlConnection.ExecuteAsync(script, new { user.Id });
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

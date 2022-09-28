@@ -1,16 +1,15 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Twitter.Application.Commands.CreateUser;
-using Twitter.Application.Commands.DeleteUser;
-using Twitter.Application.Commands.LoginUser;
-using Twitter.Application.Queries.GetAllFollowers;
-using Twitter.Application.Queries.GetAllFollowing;
-using Twitter.Application.Queries.GetUser;
+using Twitter.Application.Users.Commands.CreateUser;
+using Twitter.Application.Users.Commands.DeleteUser;
+using Twitter.Application.Users.Commands.LoginUser;
+using Twitter.Application.Users.Queries.GetUser;
 
 namespace Twitter.API.Controllers
 {
     [Route("api/users")]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -25,22 +24,6 @@ namespace Twitter.API.Controllers
             var query = new GetUserQuery(id);
             var user = await _mediator.Send(query);
             return Ok(user);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllFollowers(int id)
-        {
-            var query = new GetAllFollowersQuery(id);
-            var followers = await _mediator.Send(query);
-            return Ok(followers);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllFollowings(int id)
-        {
-            var query = new GetAllFollowingQuery(id);
-            var followings = await _mediator.Send(query);
-            return Ok(followings);
         }
 
         [HttpPost]
