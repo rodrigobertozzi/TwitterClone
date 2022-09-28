@@ -33,6 +33,7 @@ namespace Twitter.API.Controllers
             var id = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetByUsername), new { id = 1 }, command);
         }
+
         [HttpPut("login")]
         [AllowAnonymous]
         public async Task<IActionResult> Put([FromBody] LoginUserCommand command)

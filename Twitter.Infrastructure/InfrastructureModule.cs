@@ -6,6 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Twitter.Infrastructure.Persistance;
 using Twitter.Infrastructure.Persistance.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Twitter.Domain.Services;
+using Twitter.Infrastructure.Auth;
 
 namespace Twitter.Infrastructure
 {
@@ -15,8 +18,8 @@ namespace Twitter.Infrastructure
             services
                 .AddPersistence(configuration)
                 .AddRepositories()
-                .AddUnitOfWork();
-                //.AddAuthentication(configuration)
+                .AddUnitOfWork()
+                .AddAuthentication(configuration);
                 //.AddMessageBus()
                 //.AddServices();
 
@@ -39,29 +42,30 @@ namespace Twitter.Infrastructure
             return services;
         }
 
-        //private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration) {
-        //    services
-        //        .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        //        .AddJwtBearer(options =>
-        //        {
-        //            options.TokenValidationParameters = new TokenValidationParameters
-        //            {
-        //                ValidateIssuer = true,
-        //                ValidateAudience = true,
-        //                ValidateLifetime = true,
-        //                ValidateIssuerSigningKey = true,
+        private static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+        {
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
 
-        //                ValidIssuer = configuration["Jwt:Issuer"],
-        //                ValidAudience = configuration["Jwt:Audience"],
-        //                IssuerSigningKey = new SymmetricSecurityKey
-        //                (Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
-        //            };
-        //        });
+                        ValidIssuer = configuration["Jwt:Issuer"],
+                        ValidAudience = configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey
+                        (Encoding.UTF8.GetBytes(configuration["Jwt:Key"]))
+                    };
+                });
 
-        //    services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IAuthService, AuthService>();
 
-        //    return services;
-        //}
+            return services;
+        }
 
         //private static IServiceCollection AddMessageBus(this IServiceCollection services) {
         //    services.AddScoped<IMessageBusService, MessageBusService>();
@@ -71,7 +75,7 @@ namespace Twitter.Infrastructure
 
         //private static IServiceCollection AddServices(this IServiceCollection services) {
         //    services.AddScoped<IPaymentService, PaymentService>();
-            
+
         //    return services;
         //}
 

@@ -8,13 +8,13 @@ namespace Twitter.Application.ViewModels
 {
     public class LoginUserViewModel
     {
-        public LoginUserViewModel(string username, string password)
+        public LoginUserViewModel(string email, string token)
         {
-            Username = username;
-            Password = password;
+            Email = email;
+            Token = token;
         }
 
-        public string Username { get; private set; }
-        public string Password { get; private set; }
+        public string Email { get; private set; }
+        public string Token { get; private set; }
     }
 }

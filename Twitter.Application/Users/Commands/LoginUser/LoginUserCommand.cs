@@ -11,11 +11,6 @@ namespace Twitter.Application.Users.Commands.LoginUser
 {
     public class LoginUserCommand : IRequest<LoginUserViewModel>
     {
-        public LoginUserCommand()
-        {
-
-        }
-
         public string Email { get; set; } = String.Empty;
         public string Password { get; set; } = String.Empty;
     }

@@ -13,6 +13,7 @@ namespace Twitter.Domain.Repositories
         Task AddAsync(User user);
         Task DeleteAsync(User user);
         Task UpdateUserAsync(User user);
-        
+        Task<User> GetUserByEmailAndPasswordAsync(string email, string passwordHash);
+
     }
 }

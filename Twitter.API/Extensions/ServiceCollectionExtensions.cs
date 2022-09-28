@@ -1,6 +1,8 @@
 ﻿
 
 using Twitter.Domain.Repositories;
+using Twitter.Domain.Services;
+using Twitter.Infrastructure.Auth;
 using Twitter.Infrastructure.Persistance.Repositories;
 
 namespace Twitter.API.Extensions
@@ -12,6 +14,8 @@ namespace Twitter.API.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITweetRepository, TweetRepository>();
             services.AddScoped<IFollowRepository, FollowRepository>();
+
+            services.AddScoped<IAuthService, AuthService>();
 
             return services;
         }

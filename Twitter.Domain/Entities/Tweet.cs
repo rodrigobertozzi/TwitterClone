@@ -9,17 +9,12 @@ namespace Twitter.Domain.Entities
 {
     public class Tweet : BaseEntity
     {
-        public Tweet()
-        {
-
-        }
-
         public Tweet(string content)
         {
             Content = content;
         }
 
-        public string Content { get; private set; } = string.Empty;
+        public string Content { get; private set; }
         public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
     }
 }
