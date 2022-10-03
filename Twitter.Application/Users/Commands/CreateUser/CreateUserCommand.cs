@@ -9,13 +9,13 @@ namespace Twitter.Application.Users.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<int>
     {
-        public string FullName { get; private set; } = string.Empty;
-        public string Name { get; private set; } = string.Empty;
-        public string Email { get; private set; } = string.Empty;
-        public string Username { get; private set; } = string.Empty;
-        public string Password { get; private set; } = string.Empty;
-        public DateTime BirthDate { get; private set; }
-        public string Bio { get; private set; } = string.Empty;
-        public string Location { get; private set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
+        public DateTime BirthDate { get; set; }
+        public string Bio { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
     }
 }

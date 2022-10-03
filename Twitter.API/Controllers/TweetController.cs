@@ -15,7 +15,7 @@ namespace Twitter.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             var query = new GetAllTweetsQuery(id);

@@ -15,10 +15,6 @@ namespace Twitter.Application.Users.Queries.GetUser
             Id = id;
         }
 
-        public int Id { get; private set; }
-        public string Name { get; private set; } = string.Empty;
-        public string Username { get; private set; } = string.Empty;
-        public string Bio { get; private set; } = string.Empty;
-        public string Location { get; private set; } = string.Empty;
+        public int Id { get; set; }
     }
 }

@@ -1,13 +1,4 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
 using Twitter.Domain.Entities;
 using Twitter.Domain.Models;
 using Twitter.Domain.Repositories;
@@ -18,11 +9,9 @@ namespace Twitter.Infrastructure.Persistance.Repositories
     {
         private const int PAGE_SIZE = 2;
         private readonly TwitterDbContext _dbContext;
-        private readonly string _connectionString;
-        public FollowRepository(TwitterDbContext dbContext, IConfiguration configuration)
+        public FollowRepository(TwitterDbContext dbContext)
         {
             _dbContext = dbContext;
-            _connectionString = configuration.GetConnectionString("TwitterCs");
         }
 
         public async Task Add(Follow follow)
@@ -43,7 +32,12 @@ namespace Twitter.Infrastructure.Persistance.Repositories
 
         public async Task<Follow> GetByIdAsync(int followedId, int followerId)
         {
-            return await _dbContext.Follows.SingleOrDefaultAsync(f => f.FollowedId == followedId && f.FollowerId == followerId);
+            IQueryable<Follow> follow = _dbContext.Follows;
+
+            follow = follow
+               .Where(f => f.FollowedId == followedId && f.FollowerId == followerId);
+
+            return await follow.FirstAsync();
         }
 
         public async Task Remove(Follow follow)

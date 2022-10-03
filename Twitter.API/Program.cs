@@ -29,8 +29,8 @@ builder.Services.AddControllers(options => options.Filters.Add(typeof(Validation
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddMediatR(typeof(CreateUserCommand));
-
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Twitter.API", Version = "v1" });

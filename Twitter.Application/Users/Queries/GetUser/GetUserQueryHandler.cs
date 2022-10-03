@@ -24,13 +24,16 @@ namespace Twitter.Application.Users.Queries.GetUser
             var user = await _unitOfWork.Users.GetByIdAsync(request.Id);
 
             if (user == null)
-                throw new ArgumentException("Não esxiste um usuário com esse ID");
+                throw new ArgumentException("Não existe um usuário com esse ID");
+
+            var userViewModel = new UserViewModel(user.Name, user.Username, user.Bio, user.Location);
 
             await _unitOfWork.CompleteAsync();
 
             await _unitOfWork.CommitAsync();
 
-            return new UserViewModel(request.Name, request.Username, request.Bio, request.Location);
+            return userViewModel;
+            
         }
     }
 }

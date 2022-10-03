@@ -25,7 +25,12 @@ namespace Twitter.Infrastructure.Persistance.Repositories
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _dbContext.Users.SingleOrDefaultAsync(u => u.Id == id);
+            IQueryable<User> user = _dbContext.Users;
+
+            user = user
+               .Where(u => u.Id == id);
+
+            return await user.FirstAsync<User>();
         }
 
         public async Task AddAsync(User user)
@@ -50,7 +55,12 @@ namespace Twitter.Infrastructure.Persistance.Repositories
 
         public async Task<User> GetUserByEmailAndPasswordAsync(string email, string passwordHash)
         {
-            return await _dbContext.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == passwordHash);
+            IQueryable<User> user = _dbContext.Users;
+
+            user = user
+               .Where(u => u.Email == email && u.Password == passwordHash);
+
+            return await user.FirstAsync<User>();
         }
     }
 }

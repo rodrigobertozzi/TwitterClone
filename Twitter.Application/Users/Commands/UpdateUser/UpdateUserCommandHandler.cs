@@ -21,8 +21,11 @@ namespace Twitter.Application.Users.Commands.UpdateUser
             await _unitOfWork.BeginTransactionAsync();
 
             var user = await _unitOfWork.Users.GetByIdAsync(request.Id);
+            
             if (user == null)
                 throw new Exception("Esse usuário não existe.");
+
+            user.UpdateUser(request.Name, request.FullName, request.Email, request.Username, request.Password, request.BirthDate, request.Bio, request.Location);
 
             await _unitOfWork.Users.UpdateUserAsync(user);
 

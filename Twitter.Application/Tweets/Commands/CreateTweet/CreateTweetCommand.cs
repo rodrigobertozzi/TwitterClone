@@ -10,15 +10,13 @@ namespace Twitter.Application.Tweets.Commands.CreateTweet
 {
     public class CreateTweetCommand : IRequest<int>
     {
-        public CreateTweetCommand(string content, User user)
+        public CreateTweetCommand(string content)
         {
             Content = content;
-            User = user;
         }
 
         public int IdTweet { get; set; }
         public int IdUser { get; set; }
         public string Content { get; set; } = string.Empty;
-        public User User { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,10 +22,11 @@ namespace Twitter.Infrastructure.Persistance.Repositories
 
         public async Task<Tweet> GetByIdAsync(int id)
         {
-            return await _dbContext
-                .Tweets
-                .AsNoTracking()
-                .SingleOrDefaultAsync(p => p.Id == id);
+            IQueryable<Tweet> tweet = _dbContext.Tweets;
+            tweet = tweet
+               .Where(t => t.Id == id);
+
+            return await tweet.FirstAsync<Tweet>();
         }
 
         public async Task<PaginationResult<Tweet>> GetAllAsync(string query, int page)

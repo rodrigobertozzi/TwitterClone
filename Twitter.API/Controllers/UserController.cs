@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Twitter.Application.Users.Commands.CreateUser;
 using Twitter.Application.Users.Commands.DeleteUser;
 using Twitter.Application.Users.Commands.LoginUser;
+using Twitter.Application.Users.Commands.UpdateUser;
 using Twitter.Application.Users.Queries.GetUser;
 
 namespace Twitter.API.Controllers
@@ -18,11 +19,11 @@ namespace Twitter.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetByUsername(int id)
+        [HttpGet]
+        public IActionResult GetById(int id)
         {
             var query = new GetUserQuery(id);
-            var user = await _mediator.Send(query);
+            var user = _mediator.Send(query);
             return Ok(user);
         }
 
@@ -31,7 +32,7 @@ namespace Twitter.API.Controllers
         public async Task<IActionResult> Post([FromBody] CreateUserCommand command)
         {
             var id = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetByUsername), new { id = 1 }, command);
+            return CreatedAtAction(nameof(GetById), new { id }, command);
         }
 
         [HttpPut("login")]
@@ -44,6 +45,14 @@ namespace Twitter.API.Controllers
                 return BadRequest();
 
             return Ok(loginUserViewModel);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put([FromBody] UpdateUserCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
+
         }
 
         [HttpDelete("{id}")]
