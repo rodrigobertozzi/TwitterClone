@@ -1,15 +1,11 @@
 ﻿using Dapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Twitter.Domain.Entities;
 using Twitter.Domain.Repositories;
-using static System.Net.Mime.MediaTypeNames;
+using Twitter.Domain.Services;
 
 namespace Twitter.Infrastructure.Persistance.Repositories
 {
@@ -17,10 +13,12 @@ namespace Twitter.Infrastructure.Persistance.Repositories
     {
         private readonly TwitterDbContext _dbContext;
         private readonly string _connectionString;
-        public UserRepository(TwitterDbContext dbContext, IConfiguration configuration)
+        private readonly ICurrentUserService _currentUserService;
+        public UserRepository(TwitterDbContext dbContext, IConfiguration configuration, ICurrentUserService currentUserService)
         {
             _dbContext = dbContext;
             _connectionString = configuration.GetConnectionString("TwitterCs");
+            _currentUserService = currentUserService;
         }
 
         public async Task<User> GetByIdAsync(int id)
@@ -61,6 +59,15 @@ namespace Twitter.Infrastructure.Persistance.Repositories
                .Where(u => u.Email == email && u.Password == passwordHash);
 
             return await user.FirstAsync<User>();
+        }
+
+        public async Task<User> FirstAsync()
+        {
+            IQueryable<User> applicationUser = _dbContext.Users;
+            applicationUser = applicationUser
+               .Where(u => u.ApplicationUserId == _currentUserService.UserId);
+
+            return await applicationUser.FirstAsync();
         }
     }
 }

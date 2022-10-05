@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CloudServices\Interfaces\" />
     <Folder Include="Persistance\Migrations\" />
   </ItemGroup>
 

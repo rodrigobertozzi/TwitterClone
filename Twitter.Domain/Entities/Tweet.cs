@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Twitter.Domain.Shared;
+using Twitter.Domain.Common;
 
 namespace Twitter.Domain.Entities
 {

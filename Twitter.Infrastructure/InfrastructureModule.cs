@@ -9,6 +9,7 @@ using Twitter.Infrastructure.Persistance.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Twitter.Domain.Services;
 using Twitter.Infrastructure.Auth;
+using Twitter.Infrastructure.CurrentUser;
 
 namespace Twitter.Infrastructure
 {
@@ -19,18 +20,21 @@ namespace Twitter.Infrastructure
                 .AddPersistence(configuration)
                 .AddRepositories()
                 .AddUnitOfWork()
+                .AddCurrentUser()
                 .AddAuthentication(configuration);
+                
                 //.AddMessageBus()
                 //.AddServices();
 
             return services;
         }
 
-        private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) {
+        private static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration) 
+        {
             var connectionString = configuration.GetConnectionString("TwitterCs");
 
             services.AddDbContext<TwitterDbContext>(options => options.UseSqlServer(connectionString));
-            // services.AddDbContext<TwitterDbContext>(options => options.UseInMemoryDatabase("TwitterDb"));
+            //services.AddDbContext<TwitterDbContext>(options => options.UseInMemoryDatabase("TwitterDb"));
 
             return services;
         }
@@ -82,6 +86,13 @@ namespace Twitter.Infrastructure
         private static IServiceCollection AddUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            return services;
+        }
+
+        private static IServiceCollection AddCurrentUser(this IServiceCollection services)
+        {
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             return services;
         }

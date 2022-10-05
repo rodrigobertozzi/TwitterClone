@@ -9,9 +9,9 @@ namespace Twitter.Domain.Entities
     public class User : BaseEntity
     {
 
-        public User(string fullName, string name, string email, string username, string password, DateTime birthDate, string bio, string location)
+        public User(string name, string email, string username, string password, DateTime birthDate, string bio, string location)
         {
-            FullName = fullName;
+            ApplicationUserId = new Guid(email).ToString();
             Name = name;
             Email = email;
             Username = username;
@@ -21,7 +21,7 @@ namespace Twitter.Domain.Entities
             Location = location;
         }
 
-        public string FullName { get; private set; } 
+        public string ApplicationUserId { get; private set; }
         public string Name { get; private set; } 
         public string Email { get; private set; } 
         public string Username { get; private set; } 
@@ -35,9 +35,8 @@ namespace Twitter.Domain.Entities
         public IEnumerable<Follow> Followers { get; set; } = new List<Follow>();
         public IEnumerable<Follow> Followeds { get; set; } = new List<Follow>();
         
-        public void UpdateUser(string fullName, string name, string email, string username, string password, DateTime birthDate, string bio, string location)
+        public void UpdateUser(string name, string email, string username, string password, DateTime birthDate, string bio, string location)
         {
-            FullName = fullName;
             Name = name;
             Email = email;
             Username = username;

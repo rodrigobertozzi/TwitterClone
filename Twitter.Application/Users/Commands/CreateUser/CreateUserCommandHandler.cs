@@ -24,7 +24,7 @@ namespace Twitter.Application.Users.Commands.CreateUser
         {
             var passwordHash = _authService.ComputeSha256Hash(request.Password);
 
-            var user = new User(request.FullName, request.Name, request.Email, request.Username, passwordHash, request.BirthDate, request.Location, request.Bio);
+            var user = new User(request.Name, request.Email, request.Username, passwordHash, request.BirthDate, request.Location, request.Bio);
 
             await _unitOfWork.BeginTransactionAsync();
             

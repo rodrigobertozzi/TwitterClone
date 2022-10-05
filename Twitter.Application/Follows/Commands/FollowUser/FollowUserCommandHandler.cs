@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Twitter.Domain.Entities;
-using Twitter.Domain.DomainEvents;
+using Twitter.Domain.Events;
 using Twitter.Domain.Repositories;
 using Twitter.Infrastructure.Persistance;
-using static Twitter.Domain.DomainEvents.FollowedCreatedEvent;
+using static Twitter.Domain.Events.FollowedCreatedEvent;
 
 namespace Twitter.Application.Follows.Commands.FollowUser
 {
@@ -16,7 +16,7 @@ namespace Twitter.Application.Follows.Commands.FollowUser
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public FollowUserCommandHandler(IUnitOfWork unitOfWork, ITweetRepository tweetRepository)
+        public FollowUserCommandHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

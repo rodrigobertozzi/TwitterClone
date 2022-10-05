@@ -28,6 +28,7 @@ builder.Services.AddInfrastructure();
 builder.Services.AddControllers(options => options.Filters.Add(typeof(ValidationFilter)));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddMediatR(typeof(CreateUserCommand));
 builder.Services.AddEndpointsApiExplorer();
 

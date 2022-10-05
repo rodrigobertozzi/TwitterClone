@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Twitter.Domain.Entities;
-using Twitter.Domain.Shared;
+using Twitter.Domain.Common;
 
-namespace Twitter.Domain.DomainEvents
+namespace Twitter.Domain.Events
 {
     public class FollowedCreatedEvent : DomainEvent
     {

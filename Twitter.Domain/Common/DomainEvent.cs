@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Twitter.Domain.Shared
+namespace Twitter.Domain.Common
 {
     public interface IHasDomainEvent
     {

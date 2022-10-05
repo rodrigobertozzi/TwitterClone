@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using System.Reflection;
 using Twitter.Domain.Entities;
 
@@ -21,4 +22,5 @@ namespace Twitter.Infrastructure.Persistance
         }
 
     }
+
 }

@@ -17,9 +17,9 @@ namespace Twitter.Infrastructure.Persistance.Configurations
                 .HasKey(u => u.Id);
 
             builder
-                .Property(u => u.FullName)
-                .HasMaxLength(60);
-            
+                .HasIndex(u => u.ApplicationUserId)
+                .IsUnique();
+
             builder
                 .Property(u => u.Username)
                 .HasMaxLength(20);

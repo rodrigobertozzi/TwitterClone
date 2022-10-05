@@ -47,7 +47,7 @@ namespace Twitter.API.Controllers
             return Ok(loginUserViewModel);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody] UpdateUserCommand command)
         {
             await _mediator.Send(command);

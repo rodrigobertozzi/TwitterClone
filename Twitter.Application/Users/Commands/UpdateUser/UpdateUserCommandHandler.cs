@@ -1,9 +1,4 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Twitter.Domain.Entities;
 using Twitter.Infrastructure.Persistance;
 
@@ -12,6 +7,7 @@ namespace Twitter.Application.Users.Commands.UpdateUser
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Unit>
     {
         private readonly IUnitOfWork _unitOfWork;
+        
         public UpdateUserCommandHandler(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -20,12 +16,9 @@ namespace Twitter.Application.Users.Commands.UpdateUser
         {
             await _unitOfWork.BeginTransactionAsync();
 
-            var user = await _unitOfWork.Users.GetByIdAsync(request.Id);
-            
-            if (user == null)
-                throw new Exception("Esse usuário não existe.");
+            var user = await _unitOfWork.Users.FirstAsync();
 
-            user.UpdateUser(request.Name, request.FullName, request.Email, request.Username, request.Password, request.BirthDate, request.Bio, request.Location);
+            user.UpdateUser(request.Name, request.Email, request.Username, request.Password, request.BirthDate, request.Bio, request.Location);
 
             await _unitOfWork.Users.UpdateUserAsync(user);
 
