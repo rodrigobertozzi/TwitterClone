@@ -22,11 +22,11 @@ namespace Twitter.Application.Follows.Queries.GetUserFollows
         {
             await _unitOfWork.BeginTransactionAsync();
 
-            var paginationFollows = await _unitOfWork.Follows.GetAllFollowsAsync(request.FollowerId, request.Page);
+            var paginationFollows = await _unitOfWork.Follows.GetAllFollowsAsync(request.Username, request.Page);
 
             var followsViewModel = paginationFollows
                 .Data
-                .Select(f => new FollowViewModel(f.Followed, f.FollowedId))
+                .Select(f => new FollowViewModel(f.Followed.Followers))
                 .ToList();
 
             var paginationFollowsViewModel = new PaginationResult<FollowViewModel>(

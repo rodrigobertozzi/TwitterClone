@@ -12,12 +12,12 @@ namespace Twitter.Application.Follows.Queries.GetUserFollows
 {
     public class GetUserFollowsQuery : IRequest<PaginationResult<FollowViewModel>>
     {
-        public GetUserFollowsQuery(int followerId)
+        public GetUserFollowsQuery(string username)
         {
-            FollowerId = followerId;
+            Username = username;
         }
 
-        public int FollowerId { get; set; }
+        public string Username { get; set; }
         public int Page { get; set; } = 1;
     }
 }

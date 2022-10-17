@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,19 @@ namespace Twitter.Application.Follows.Commands.FollowUser
         {
             await _unitOfWork.BeginTransactionAsync();
 
-            var follow = await _unitOfWork.Follows.GetByIdAsync(request.FollowedId, request.FollowerId);
-            if (follow != null)
-                throw new Exception("Você já segue essa pessoa.");
+            var user = await _unitOfWork.Users.FirstAsync();
+            if (user == null)
+                throw new Exception();
 
-            // implementar o alreadyFollowed
+            var followed = await _unitOfWork.Users.GetByUsernameAsync(request.Username);
+            if (user == null)
+                throw new Exception();
 
-            var userFollow = new Follow { FollowedId = request.FollowedId, FollowerId = request.FollowerId };
+            var alreadyFollowed = await _unitOfWork.Follows.AnyAsync(request.Username);
+            if (alreadyFollowed != null)
+                throw new Exception("você já segue essa pessoa");
+
+            var userFollow = new Follow { FollowedId = followed.Id, FollowerId = user.Id };
 
             userFollow.DomainEvents.Add(new FollowedCreatedEvent(userFollow));
 

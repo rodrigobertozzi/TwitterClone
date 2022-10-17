@@ -19,7 +19,7 @@ namespace Twitter.Application.Users.Commands.DeleteUser
         }
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(request.Id);
+            var user = await _unitOfWork.Users.FirstAsync();
 
             await _unitOfWork.BeginTransactionAsync();
 

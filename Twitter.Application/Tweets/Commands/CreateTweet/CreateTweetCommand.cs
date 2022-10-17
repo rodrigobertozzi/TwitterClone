@@ -15,8 +15,6 @@ namespace Twitter.Application.Tweets.Commands.CreateTweet
             Content = content;
         }
 
-        public int IdTweet { get; set; }
-        public int IdUser { get; set; }
         public string Content { get; set; } = string.Empty;
     }
 }

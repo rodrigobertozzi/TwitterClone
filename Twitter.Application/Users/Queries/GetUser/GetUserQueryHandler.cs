@@ -21,10 +21,10 @@ namespace Twitter.Application.Users.Queries.GetUser
         {
             await _unitOfWork.BeginTransactionAsync();
 
-            var user = await _unitOfWork.Users.GetByIdAsync(request.Id);
+            var user = await _unitOfWork.Users.GetByIdAsync(request.Username);
 
             if (user == null)
-                throw new ArgumentException("Não existe um usuário com esse ID");
+                throw new ArgumentException("Não existe um usuário com esse username");
 
             var userViewModel = new UserViewModel(user.Name, user.Username, user.Bio, user.Location);
 

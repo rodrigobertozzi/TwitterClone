@@ -10,8 +10,8 @@ namespace Twitter.Domain.Repositories
 {
     public interface ITweetRepository
     {
+        Task<PaginationResult<Tweet>> GetAllAsync(string username, int page = 1);
         Task<Tweet> GetByIdAsync(int id);
-        Task<PaginationResult<Tweet>> GetAllAsync(string query, int page = 1);
         Task AddAsync(Tweet tweet);
         Task DeleteAsync(Tweet tweet);
     }

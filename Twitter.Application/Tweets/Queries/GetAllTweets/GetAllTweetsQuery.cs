@@ -11,13 +11,12 @@ namespace Twitter.Application.Tweets.Queries.GetAllTweets
 {
     public class GetAllTweetsQuery : IRequest<PaginationResult<TweetViewModel>>
     {
-        public GetAllTweetsQuery(int id)
+        public GetAllTweetsQuery(string username)
         {
-            Id = id;
+            Username = username;
         }
 
-        public int Id { get; private set; }
-        public string Query { get; set; } = String.Empty;
+        public string Username { get; private set; }
         public int Page { get; set; } = 1;
     }
 }

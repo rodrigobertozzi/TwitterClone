@@ -10,8 +10,8 @@ namespace Twitter.Domain.Repositories
 {
     public interface IFollowRepository
     {
-        Task<Follow> GetByIdAsync(int followedId, int followerId);
-        Task<PaginationResult<Follow>> GetAllFollowsAsync(int followerId, int page = 1);
+        Task<PaginationResult<Follow>> GetAllFollowsAsync(string username, int page = 1);
+        Task<Follow> AnyAsync(string username);
         Task Add(Follow follow);
         Task Remove(Follow follow);
     }

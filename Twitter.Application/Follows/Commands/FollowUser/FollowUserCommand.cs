@@ -9,7 +9,12 @@ namespace Twitter.Application.Follows.Commands.FollowUser
 {
     public class FollowUserCommand : IRequest<string>
     {
-        public int FollowerId { get; set; }
-        public int FollowedId { get; set; }
+        public string Username { get; set; }
+
+        public FollowUserCommand(string username)
+        {
+            Username = username;
+        }
     }
+    
 }

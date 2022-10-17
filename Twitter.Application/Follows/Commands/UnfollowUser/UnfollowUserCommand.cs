@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace Twitter.Application.Follows.Commands.UnfollowUser
 {
-    public class UnfollowUserCommand : IRequest<string>
+    public class UnfollowUserCommand : IRequest
     {
-        public int FollowerId { get; set; }
-        public int FollowedId { get; set; }
+        public string Username { get; set; }
+
+        public UnfollowUserCommand(string username)
+        {
+            Username = username;
+        }
     }
 }

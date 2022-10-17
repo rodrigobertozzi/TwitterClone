@@ -21,12 +21,12 @@ namespace Twitter.Infrastructure.Persistance.Repositories
             _currentUserService = currentUserService;
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByUsernameAsync(string username)
         {
             IQueryable<User> user = _dbContext.Users;
 
             user = user
-               .Where(u => u.Id == id);
+               .Where(u => u.Username == username);
 
             return await user.FirstAsync<User>();
         }
@@ -39,10 +39,13 @@ namespace Twitter.Infrastructure.Persistance.Repositories
 
         public async Task DeleteAsync(User user)
         {
-            using var sqlConnection = new SqlConnection(_connectionString);
-            await sqlConnection.OpenAsync();
-            var script = "DELETE FROM Users WHERE Id = @id";
-            await sqlConnection.ExecuteAsync(script, new { user.Id });
+            //using var sqlConnection = new SqlConnection(_connectionString);
+            //await sqlConnection.OpenAsync();
+            //var script = "DELETE FROM Users WHERE Username = @id";
+            //await sqlConnection.ExecuteAsync(script, new { user.Id });
+
+            _dbContext.Users.Remove(user);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task UpdateUserAsync(User user)

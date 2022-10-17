@@ -9,7 +9,7 @@ namespace Twitter.Domain.Repositories
 {
     public interface IUserRepository
     {
-        Task<User> GetByIdAsync(int id);
+        Task<User> GetByUsernameAsync(string username);
         Task<User> FirstAsync();
         Task AddAsync(User user);
         Task DeleteAsync(User user);

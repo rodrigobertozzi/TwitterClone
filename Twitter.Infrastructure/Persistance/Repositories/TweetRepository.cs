@@ -29,14 +29,13 @@ namespace Twitter.Infrastructure.Persistance.Repositories
             return await tweet.FirstAsync<Tweet>();
         }
 
-        public async Task<PaginationResult<Tweet>> GetAllAsync(string query, int page)
+        public async Task<PaginationResult<Tweet>> GetAllAsync(string username, int page)
         {
             IQueryable<Tweet> tweets = _dbContext.Tweets;
-            if(!string.IsNullOrEmpty(query))
-            {
+            
                 tweets = tweets
-                    .Where(t => t.Content.Contains(query));
-            }
+                    .Where(t => t.Username == username);
+            
             return await tweets.GetPaged<Tweet>(page, PAGE_SIZE);
         }
 
@@ -48,10 +47,13 @@ namespace Twitter.Infrastructure.Persistance.Repositories
 
         public async Task DeleteAsync(Tweet tweet)
         {
-            using var sqlConnection = new SqlConnection(_connectionString);
-            await sqlConnection.OpenAsync();
-            var script = "DELETE FROM Tweets WHERE Id = @id";
-            await sqlConnection.ExecuteAsync(script, new { tweet.Id });
+            //using var sqlConnection = new SqlConnection(_connectionString);
+            //await sqlConnection.OpenAsync();
+            //var script = "DELETE FROM Tweets WHERE Id = @id";
+            //await sqlConnection.ExecuteAsync(script, new { tweet.Id });
+
+            _dbContext.Tweets.Remove(tweet);
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

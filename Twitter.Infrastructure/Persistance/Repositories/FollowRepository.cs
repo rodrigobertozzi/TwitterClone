@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Threading;
 using Twitter.Domain.Entities;
 using Twitter.Domain.Models;
 using Twitter.Domain.Repositories;
+using Twitter.Domain.Services;
 
 namespace Twitter.Infrastructure.Persistance.Repositories
 {
@@ -9,9 +11,11 @@ namespace Twitter.Infrastructure.Persistance.Repositories
     {
         private const int PAGE_SIZE = 2;
         private readonly TwitterDbContext _dbContext;
-        public FollowRepository(TwitterDbContext dbContext)
+        private readonly ICurrentUserService _currentUserService;
+        public FollowRepository(TwitterDbContext dbContext, ICurrentUserService currentUserService)
         {
             _dbContext = dbContext;
+            _currentUserService = currentUserService;
         }
 
         public async Task Add(Follow follow)
@@ -44,6 +48,15 @@ namespace Twitter.Infrastructure.Persistance.Repositories
         {
             _dbContext.Follows.Remove(follow);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Follow> AnyAsync(string username)
+        {
+            IQueryable<Follow> applicationUser = _dbContext.Follows;
+            applicationUser = applicationUser
+               .Where(f => f.Followed.Username == username  && f.Follower.ApplicationUserId == _currentUserService.UserId);
+
+            return await applicationUser.FirstAsync();
         }
     }
 }

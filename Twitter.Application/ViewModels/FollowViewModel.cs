@@ -9,13 +9,11 @@ namespace Twitter.Application.ViewModels
 {
     public class FollowViewModel
     {
-        public FollowViewModel(User followed, int followedId)
+        public FollowViewModel(IEnumerable<Follow> followers)
         {
-            Followed = followed;
-            FollowedId = followedId;
+            Followers = followers;
         }
 
-        public User Followed { get; set; }
-        public int FollowedId { get; set; }
+        public IEnumerable<Follow> Followers { get; set; }
     }
 }

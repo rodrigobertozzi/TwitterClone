@@ -20,12 +20,20 @@ namespace Twitter.Application.Follows.Commands.UnfollowUser
         {
             await _unitOfWork.BeginTransactionAsync();
 
-            var follow = await _unitOfWork.Follows.GetByIdAsync(request.FollowerId, request.FollowerId);
-            if (follow == null)
-                throw new Exception("Você não segue essa pessoa");
+            var user = await _unitOfWork.Users.FirstAsync();
+            if (user == null)
+                throw new Exception();
+
+            var followed = await _unitOfWork.Users.GetByUsernameAsync(request.Username);
+            if (followed == null)
+                throw new Exception();
+
+            var removeFollow = await _unitOfWork.Follows.AnyAsync(request.Username);
+            if (removeFollow == null)
+                throw new Exception();
             else
-                await _unitOfWork.Follows.Remove(follow);
-            
+                await _unitOfWork.Follows.Remove(removeFollow);
+
             await _unitOfWork.CompleteAsync();
 
             await _unitOfWork.CommitAsync();

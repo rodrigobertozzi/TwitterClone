@@ -17,7 +17,7 @@ namespace Twitter.Application.Tweets.Queries.GetAllTweets
         {
             await _unitOfWork.BeginTransactionAsync();
 
-            var paginationTweets = await _unitOfWork.Tweets.GetAllAsync(request.Query, request.Page);
+            var paginationTweets = await _unitOfWork.Tweets.GetAllAsync(request.Username, request.Page);
 
             var tweetsViewModel = paginationTweets
                 .Data
